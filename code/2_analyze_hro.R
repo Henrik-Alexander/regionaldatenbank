@@ -38,20 +38,20 @@ load("data/pop_age.Rda")
 pop_hro <- pop_df[pop_df$region %in% region_rostock, ]
 
 # Pivot wider
-ggplot(subset(pop_hro, year == 2023 & age<75), aes(x=age, y = ifelse(sex=="M", -pop, pop), fill=sex)) +
+ggplot(subset(pop_hro, year == 2023 & age<75), aes(x=age+0.5, y = ifelse(sex=="M", -pop, pop), fill=sex)) +
   geom_col() +
-  geom_step(data=subset(pop_hro, year == 2003 & age<75), aes(x = age-0.5, linetype=sex), color="black", linewidth=1.5) +
+  #geom_step(data=subset(pop_hro, year == 2003 & age<75), aes(x = age-0.5, linetype=sex), color="black", linewidth=1.5) +
   geom_hline(yintercept = 0, color="white") +
   coord_flip() +
   scale_linetype_manual("Geschlecht:", values = c("dotted", "dashed")) +
   scale_fill_manual("Geschlecht:", values = c("darkblue", "darkred")) +
-  scale_x_continuous("Alter", expand = c(0, 0), n.breaks = 20, sec.axis = sec_axis(transform =~2023-., breaks = seq(1950, 2020, by=10))) +
-  scale_y_continuous("Bevölkerung", n.breaks = 10, label=abs) +
-  theme_bw(base_size=15, base_family="serif") +
+  scale_x_continuous("Alter", expand = c(0, 0), limits=c(0, 75), n.breaks = 20, sec.axis = sec_axis(transform =~2023-., breaks = seq(1950, 2020, by=10))) +
+  scale_y_continuous("Bevoelkerung", n.breaks = 10, label=abs) +
+  theme_bw(base_size=14, base_family="serif") +
   theme(
-    legend.position = c(0.1, 0.1)
+    legend.position = c(0.15, 0.1)
   )
-ggsave(filename="pop_pyramide_rostock.pdf",
-       height=20, width=20)
+ggsave(filename="figures/pop_pyramide_rostock.pdf",
+       height=20, width=19, unit="cm")
 
 ### END ##############################################
