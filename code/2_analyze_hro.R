@@ -45,11 +45,12 @@ ggplot(subset(pop_hro, year == 2023 & age<75), aes(x=age+0.5, y = ifelse(sex=="M
   coord_flip() +
   scale_linetype_manual("Geschlecht:", values = c("dotted", "dashed")) +
   scale_fill_manual("Geschlecht:", values = c("darkblue", "darkred")) +
-  scale_x_continuous("Alter", expand = c(0, 0), limits=c(0, 75), n.breaks = 20, sec.axis = sec_axis(transform =~2023-., breaks = seq(1950, 2020, by=10))) +
-  scale_y_continuous("Bevoelkerung", n.breaks = 10, label=abs) +
+  scale_x_continuous("Alter", expand = c(0, 0), limits=c(0, 75), n.breaks = 20, sec.axis = sec_axis(name="Geburtsjahrgang", transform =~2023-., breaks = seq(1950, 2020, by=10))) +
+  scale_y_continuous("Bevölkerung", n.breaks = 10, label=abs) +
   theme_bw(base_size=14, base_family="serif") +
   theme(
-    legend.position = c(0.15, 0.1)
+    legend.position = c(0.15, 0.1),
+    axis.title = element_text(face="bold")
   )
 ggsave(filename="figures/pop_pyramide_rostock.pdf",
        height=20, width=19, unit="cm")
